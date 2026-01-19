@@ -15,6 +15,19 @@
 # Precompiled Headers
 *.gch
 *.pch
+# Data
+data/enrollment/
+data/test/
+
+# Results
+results/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
 
 # Libraries
 *.lib
