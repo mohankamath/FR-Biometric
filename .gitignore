@@ -1,6 +1,19 @@
 # Prerequisites
 *.d
 
+# Raw images (original dataset)
+data/enrollment/
+data/test/
+
+# Processed faces (generated artifacts)
+data/processed/
+
+# Face embeddings (biometric data)
+data/embeddings/
+
+# Model weights / caches
+.deepface/
+
 # Object files
 *.o
 *.ko
@@ -23,6 +36,7 @@ data/test/
 results/
 
 # Python
+venv/
 __pycache__/
 *.pyc
 
