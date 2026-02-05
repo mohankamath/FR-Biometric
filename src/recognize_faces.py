@@ -3,22 +3,24 @@ import numpy as np
 from deepface import DeepFace
 from scipy.spatial.distance import cosine
 
-EMBEDDINGS_DIR = "data/embeddings"
-TEST_IMAGE_PATH = "data/processed/test/Bill_Clinton/face_0.jpg"
+EMBEDDINGS_DIR = "data/embeddings/enrollment"
+TEST_IMAGE_PATH = "data/processed/test/test_face.jpg"
 MODEL_NAME = "ArcFace"
 THRESHOLD = 0.75
 
 
-def load_enrollment_embeddings(embeddings_dir):
-    database = {}
+def load_embeddings(embeddings_dir):
+    db = {}
 
     for file in os.listdir(embeddings_dir):
         if file.endswith(".npy"):
-            identity = file.replace(".npy", "")
-            path = os.path.join(embeddings_dir, file)
-            database[identity] = np.load(path)
+            identity = os.path.splitext(file)[0]
+            embedding_path = os.path.join(embeddings_dir, file)
+            db[identity] = np.load(embedding_path)
 
-    return database
+    return db
+
+
 
 
 def get_embedding(image_path):
@@ -46,7 +48,9 @@ def recognize_face(test_embedding, database):
 
 if __name__ == "__main__":
     print("Loading enrollment embeddings...")
-    db = load_enrollment_embeddings(EMBEDDINGS_DIR)
+    db = load_embeddings(EMBEDDINGS_DIR)
+    print(f"Loaded {len(db)} identities")
+
 
     print("Generating embedding for test image...")
     test_embedding = get_embedding(TEST_IMAGE_PATH)
