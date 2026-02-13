@@ -2,7 +2,7 @@ import os
 import random
 import shutil
 
-RAW_DIR = "data/lfw"  # original dataset
+RAW_DIR = "data/enrollment"
 OUT_DIR = "data/experiment"
 MIN_IMAGES = 3
 MAX_IMAGES = 5

@@ -12,7 +12,7 @@ data/processed/
 data/embeddings/
 data/lfw
 data/experiment
-
+data/experiment_embeddings
 # Model weights / caches
 .deepface/
 
