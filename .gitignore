@@ -10,6 +10,8 @@ data/processed/
 
 # Face embeddings (biometric data)
 data/embeddings/
+data/lfw
+data/experiment
 
 # Model weights / caches
 .deepface/
