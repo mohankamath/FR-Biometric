@@ -6,8 +6,13 @@ PROCESSED_DIR = "data/processed/enrollment"
 EMBEDDINGS_DIR = "data/embeddings/enrollment"
 
 os.makedirs(EMBEDDINGS_DIR, exist_ok=True)
-
-MODEL_NAME = "ArcFace"
+MODELS = [
+    "Facenet512",
+    "ArcFace",
+    "VGG-Face",
+    "SFace"
+]
+MODEL_NAME = "Facenet512"
 DETECTOR = "retinaface"
 
 for person in os.listdir(PROCESSED_DIR):
