@@ -5,9 +5,8 @@ from scipy.spatial.distance import cosine
 
 EMBEDDINGS_DIR = "data/embeddings/enrollment"
 TEST_IMAGE_PATH = "data/processed/test/test_face.jpg"
-MODEL_NAME = "ArcFace"
-THRESHOLD = 0.75
-
+MODEL_NAME = "Facenet512"
+THRESHOLD = 0.3
 
 def load_embeddings(embeddings_dir):
     db = {}
