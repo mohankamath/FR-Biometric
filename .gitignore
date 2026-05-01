@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+data
 # Raw images (original dataset)
 data/enrollment/
 data/test/

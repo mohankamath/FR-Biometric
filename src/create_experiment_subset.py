@@ -2,39 +2,57 @@ import os
 import random
 import shutil
 
-RAW_DIR = "data/enrollment"
-OUT_DIR = "data/experiment"
+# --- Configuration ---
+RAW_DIR = "C:\\Users\\mohan\\scikit_learn_data\\lfw_home\\lfw_funneled"  # Change this to wherever your FULL dataset is
+OUT_DIR = "data/experiment_1000"       # The new folder it will create
 MIN_IMAGES = 3
 MAX_IMAGES = 5
-NUM_PEOPLE = 150   # change later
+TARGET_NUM_PEOPLE = 1000
 
-os.makedirs(OUT_DIR, exist_ok=True)
+def create_subset():
+    os.makedirs(OUT_DIR, exist_ok=True)
+    eligible_people = []
 
-people = []
+    print(f"Scanning {RAW_DIR} for subjects with at least {MIN_IMAGES} images...")
 
-for person in os.listdir(RAW_DIR):
-    person_path = os.path.join(RAW_DIR, person)
-    if not os.path.isdir(person_path):
-        continue
+    # 1. Filter for eligible people
+    for person in os.listdir(RAW_DIR):
+        person_path = os.path.join(RAW_DIR, person)
+        if not os.path.isdir(person_path):
+            continue
 
-    images = [f for f in os.listdir(person_path) if f.endswith(".jpg")]
+        # Count how many jpgs this person has
+        images = [f for f in os.listdir(person_path) if f.endswith(".jpg")]
 
-    if len(images) >= MIN_IMAGES:
-        people.append(person)
+        if len(images) >= MIN_IMAGES:
+            eligible_people.append((person, images))
 
-random.shuffle(people)
-people = people[:NUM_PEOPLE]
+    print(f"Found {len(eligible_people)} total eligible subjects.")
 
-for person in people:
-    src = os.path.join(RAW_DIR, person)
-    dst = os.path.join(OUT_DIR, person)
-    os.makedirs(dst, exist_ok=True)
+    # 2. Randomly select the requested amount (or as many as possible)
+    random.shuffle(eligible_people)
+    selected_people = eligible_people[:TARGET_NUM_PEOPLE]
+    
+    actual_count = len(selected_people)
+    print(f"Randomly selected {actual_count} subjects for the experiment.")
 
-    images = [f for f in os.listdir(src) if f.endswith(".jpg")]
-    random.shuffle(images)
-    images = images[:MAX_IMAGES]
+    # 3. Copy the images over
+    print(f"Copying files to {OUT_DIR}...")
+    for person, images in selected_people:
+        src_dir = os.path.join(RAW_DIR, person)
+        dst_dir = os.path.join(OUT_DIR, person)
+        os.makedirs(dst_dir, exist_ok=True)
 
-    for img in images:
-        shutil.copy(os.path.join(src, img), os.path.join(dst, img))
+        # Shuffle their images and take up to MAX_IMAGES
+        random.shuffle(images)
+        images_to_copy = images[:MAX_IMAGES]
 
-print("Subset created.")
+        for img in images_to_copy:
+            shutil.copy(os.path.join(src_dir, img), os.path.join(dst_dir, img))
+
+    print("\n✅ Subset creation complete!")
+    if actual_count < TARGET_NUM_PEOPLE:
+        print(f"Note: The dataset only had {actual_count} people with {MIN_IMAGES}+ images, so we used all of them.")
+
+if __name__ == "__main__":
+    create_subset()

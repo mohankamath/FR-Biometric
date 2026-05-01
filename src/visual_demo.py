@@ -80,7 +80,7 @@ def run_visual_demo():
     if decision == "REJECT":
         result_text = f"Result: REJECT (Unknown) | Closest: {best_identity} | Score: {best_score:.3f}"
         
-    cv2.putText(display_img, result_text, (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
+    cv2.putText(display_img, result_text, (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
     # 5. Display the result
     cv2.imshow("Face Recognition Demo", display_img)
